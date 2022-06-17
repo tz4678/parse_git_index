@@ -51,7 +51,7 @@ class GitIndex:
             unpacked = self.read_struct('>10I20sH')
             # путь всегда заканчивается null-byte
             buf = io.BytesIO()
-            while (c := self._fp.read(1)) not in (b'', b'\0'):
+            while (c := self._fp.read(1)) and c != b'\0':
                 buf.write(c)
             entry = Entry(*unpacked, buf.getvalue())
             entrysize -= self._fp.tell()
